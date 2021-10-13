@@ -1,0 +1,62 @@
+Welcome to BrainTank Week 1!
+This document, is going to have crucial information about some of
+the PyTorch functions we will be using.
+
+1. Defining Parameters
+
+class CowPredictor(torch.nn.Module):
+    def __init__(self):
+        super(CowPredictor, self).__init__()
+        self.m = torch.nn.Parameter(torch.tensor(2.0, requires_grad = True))
+        self.b = torch.nn.Parameter(torch.tensor(0.0, requires_grad = True))
+    def forward(self, cow_weight):
+        # Your code here:
+        cow_cost = self.m * cow_weight + (self.b * 1000)
+
+        return cow_cost
+
+Here, we are trying to define two parameters. These paramteres are called
+"m" and "b", and they will be used in our model in the form of
+    cow price = m * cow weight + b
+
+There are multiple parts to this snippet of code.
+    a) class CowPredictor(torch.nn.Module): defines a model. This is where
+    you will be able to define what comprises your deep learning model.
+    b) the __init__ section of this code is where you initialize all the
+    parameters that will be used in your model. Parameters are the values
+    that will be changed as a model is trained. __init__ is called when you
+    define a model (ex. my_model = CowPredictor())
+    c) torch.tensor(2.0, requires_grad = True). This function creates a torch 
+    number, and assigns that number to be 2.0 (the .0 is required as it makes 
+    it a float value and not an integer value). requires_grad tells the model
+    that you want this variable to be trained.
+    d) torch.nn.Parameter() makes a torch variable a paramter for a model.
+    This function is only used in very specific scenarios, so do not worry
+    too much about it.
+    e) def forward(self, cow_weight): is run when your model is called. This is
+    in the form of my_model(20.0). The value 20 is a function parameter that is
+    referenced to in your forward function.
+
+2. The Optimizer
+
+optim = torch.optim.SGD(model.parameters(), lr=1e-7)
+
+The optimizer is the "magical" algorithm that will go through your model and
+adjust parameters to make sure your model preforms better. To do this we need
+to tell it how poorly the model is doing. We do this by calling:
+
+loss.backward()     # This line finds the errors in your parameters
+optim.step()        # This line gets the optimizer to go into your model and 
+                    # adjust those mistakes
+
+Your loss function should be a way of measuring how far off you are from your
+model predicting a correct result. Here we use a mean squared error.
+
+loss = (true - predicted) ** 2
+
+Note: ** means "to the power of" in python.
+
+We can see that if the true value and the predicted value are similar, the 
+loss will be a very low score, while if they are different, the loss will be
+a very high score. The optimizer will take your loss score, and try to reduce it.
+

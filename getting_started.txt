@@ -1,0 +1,7 @@
+Heres how to prepare your computer for week 1 of BrainTank
+
+Step 1: Install git by running this command
+sudo apt-get install git
+
+step 2: Git clone this current repository
+git clone https://github.com/BrainTankDeepLearning/Week1.git
